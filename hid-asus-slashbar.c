@@ -51,12 +51,22 @@ static int slashbar_probe(struct hid_device *hdev, const struct hid_device_id *i
     int ret;
 
     ret = hid_parse(hdev);
-    if (ret)
+    if (ret) {
+        hid_err(hdev, "hid_parse failed\n");
         return ret;
+    }
+
+    // Check for report ID 0x5D (slashbar) before starting hardware
+    if (!hid_validate_values(hdev, HID_OUTPUT_REPORT, ASUS_SLASHBAR_REPORT_ID, 0, 0)) {
+        dev_info(&hdev->dev, "ASUS slashbar report not found, skipping\n");
+        return -ENODEV;
+    }
 
     ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT);
-    if (ret)
+    if (ret) {
+        hid_err(hdev, "hid_hw_start failed\n");
         return ret;
+    }
 
     data = devm_kzalloc(&hdev->dev, sizeof(*data), GFP_KERNEL);
     if (!data)
@@ -70,10 +80,14 @@ static int slashbar_probe(struct hid_device *hdev, const struct hid_device_id *i
     data->led.brightness_set = slashbar_led_set;
 
     ret = devm_led_classdev_register(&hdev->dev, &data->led);
-    if (ret)
+    if (ret) {
+        hid_err(hdev, "led_classdev_register failed\n");
         return ret;
+    }
 
     hid_set_drvdata(hdev, data);
+
+    dev_info(&hdev->dev, "ASUS slashbar LED driver loaded\n");
 
     return 0;
 }

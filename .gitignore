@@ -1,0 +1,31 @@
+# Kernel module build artifacts
+*.o
+*.ko
+*.mod
+*.mod.c
+*.cmd
+Module.symvers
+modules.order
+.module-common.o
+
+# DKMS build artifacts
+*.mod.o
+.*.cmd
+
+# Compiled userspace tools
+slashbar-helper
+slashbar-helper-v2
+slashbar-discover
+slashbar-brightness-test
+monitor-hid
+
+# Editor and temporary files
+*~
+*.swp
+*.swo
+.vscode/
+.DS_Store
+
+# Build directories
+build/
+dist/
