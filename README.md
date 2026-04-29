@@ -1,6 +1,7 @@
 # hid-asus-slashbar
 
-> [!WARNING] This repo is deprecated. Please use [`asusctl`](https://gitlab.com/asus-linux/asusctl) and be sure to support the developers!
+> [!WARNING]
+> This repo is deprecated. Please use [`asusctl`](https://gitlab.com/asus-linux/asusctl) and be sure to support the developers!
 
 Kernel module to control the ROG Zephyrus G14 GA403WR "slashbar" LED via USB HID interface.
 
